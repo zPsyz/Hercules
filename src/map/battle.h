@@ -546,6 +546,7 @@ struct Battle_Config {
 	int atcommand_levelup_events;	// Enable atcommands trigger level up events for NPCs
 
 	int max_summoner_parameter; // Summoner Max Stats
+	int display_fake_hp_when_dead;
 };
 
 /* criteria for battle_config.idletime_critera */
