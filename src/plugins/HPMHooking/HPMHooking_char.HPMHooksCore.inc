@@ -1156,8 +1156,6 @@ struct {
 	struct HPMHookPoint *HP_mapif_parse_accinfo_post;
 	struct HPMHookPoint *HP_mapif_parse_accinfo2_pre;
 	struct HPMHookPoint *HP_mapif_parse_accinfo2_post;
-	struct HPMHookPoint *HP_mapif_broadcast_pre;
-	struct HPMHookPoint *HP_mapif_broadcast_post;
 	struct HPMHookPoint *HP_mapif_wis_message_pre;
 	struct HPMHookPoint *HP_mapif_wis_message_post;
 	struct HPMHookPoint *HP_mapif_wis_response_pre;
@@ -1168,8 +1166,6 @@ struct {
 	struct HPMHookPoint *HP_mapif_account_reg_reply_post;
 	struct HPMHookPoint *HP_mapif_disconnectplayer_pre;
 	struct HPMHookPoint *HP_mapif_disconnectplayer_post;
-	struct HPMHookPoint *HP_mapif_parse_broadcast_pre;
-	struct HPMHookPoint *HP_mapif_parse_broadcast_post;
 	struct HPMHookPoint *HP_mapif_parse_WisRequest_pre;
 	struct HPMHookPoint *HP_mapif_parse_WisRequest_post;
 	struct HPMHookPoint *HP_mapif_parse_WisReply_pre;
@@ -2675,8 +2671,6 @@ struct {
 	int HP_mapif_parse_accinfo_post;
 	int HP_mapif_parse_accinfo2_pre;
 	int HP_mapif_parse_accinfo2_post;
-	int HP_mapif_broadcast_pre;
-	int HP_mapif_broadcast_post;
 	int HP_mapif_wis_message_pre;
 	int HP_mapif_wis_message_post;
 	int HP_mapif_wis_response_pre;
@@ -2687,8 +2681,6 @@ struct {
 	int HP_mapif_account_reg_reply_post;
 	int HP_mapif_disconnectplayer_pre;
 	int HP_mapif_disconnectplayer_post;
-	int HP_mapif_parse_broadcast_pre;
-	int HP_mapif_parse_broadcast_post;
 	int HP_mapif_parse_WisRequest_pre;
 	int HP_mapif_parse_WisRequest_post;
 	int HP_mapif_parse_WisReply_pre;
