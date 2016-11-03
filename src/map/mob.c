@@ -1856,7 +1856,7 @@ struct item_drop* mob_setlootitem(struct item* item)
 
 	nullpo_retr(NULL, item);
 	drop = ers_alloc(item_drop_ers, struct item_drop);
-	memcpy(&drop->item_data, item, sizeof(struct item));
+	drop->item_data = *item;
 	drop->next = NULL;
 	return drop;
 }

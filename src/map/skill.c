@@ -4698,8 +4698,7 @@ int skill_castend_damage_id(struct block_list* src, struct block_list *bl, uint1
 
 				if( su && (sg=su->group) != NULL && skill->get_inf2(sg->skill_id)&INF2_TRAP ) {
 					if( !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) ) {
-						struct item item_tmp;
-						memset(&item_tmp,0,sizeof(item_tmp));
+						struct item item_tmp = { 0 };
 						item_tmp.nameid = sg->item_id ? sg->item_id : ITEMID_BOOBY_TRAP;
 						item_tmp.identify = 1;
 						if( item_tmp.nameid )
@@ -6936,10 +6935,10 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 		case TF_PICKSTONE:
 			if(sd) {
 				int eflag;
-				struct item item_tmp;
+				struct item item_tmp = { 0 };
 				struct block_list tbl;
 				clif->skill_nodamage(src,bl,skill_id,skill_lv,1);
-				memset(&item_tmp,0,sizeof(item_tmp));
+
 				memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
 				item_tmp.nameid = ITEMID_STONE;
 				item_tmp.identify = 1;
@@ -7664,8 +7663,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							for( i = 0; i < 10; i++ ) {
 								if( skill->dbs->db[su->group->skill_id].itemid[i] > 0 ) {
 									int success;
-									struct item item_tmp;
-									memset(&item_tmp,0,sizeof(item_tmp));
+									struct item item_tmp = { 0 };
 									item_tmp.nameid = skill->dbs->db[su->group->skill_id].itemid[i];
 									item_tmp.identify = 1;
 									if (item_tmp.nameid && (success=pc->additem(sd,&item_tmp,skill->dbs->db[su->group->skill_id].amount[i],LOG_TYPE_SKILL)) != 0) {
@@ -7676,8 +7674,7 @@ int skill_castend_nodamage_id(struct block_list *src, struct block_list *bl, uin
 							}
 						} else {
 							// get back 1 trap
-							struct item item_tmp;
-							memset(&item_tmp,0,sizeof(item_tmp));
+							struct item item_tmp = { 0 };
 							item_tmp.nameid = su->group->item_id ? su->group->item_id : ITEMID_BOOBY_TRAP;
 							item_tmp.identify = 1;
 							if (item_tmp.nameid && (flag=pc->additem(sd,&item_tmp,1,LOG_TYPE_SKILL)) != 0) {
@@ -16985,8 +16982,7 @@ int skill_unit_timer_sub(union DBKey key, struct DBData *data, va_list ap)
 				struct block_list* src;
 				if( su->val1 > 0 && (src = map->id2bl(group->src_id)) != NULL && src->type == BL_PC ) {
 					// revert unit back into a trap
-					struct item item_tmp;
-					memset(&item_tmp,0,sizeof(item_tmp));
+					struct item item_tmp = { 0 };
 					item_tmp.nameid = group->item_id ? group->item_id : ITEMID_BOOBY_TRAP;
 					item_tmp.identify = 1;
 					map->addflooritem(bl, &item_tmp, 1, bl->m, bl->x, bl->y, 0, 0, 0, 0);
@@ -17802,8 +17798,7 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 	if(make_per < 1) make_per = 1;
 
 	if(rnd()%10000 < make_per || qty > 1){ //Success, or crafting multiple items.
-		struct item tmp_item;
-		memset(&tmp_item,0,sizeof(tmp_item));
+		struct item tmp_item = { 0 };
 		tmp_item.nameid=nameid;
 		tmp_item.amount=1;
 		tmp_item.identify=1;
@@ -17993,7 +17988,7 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 				clif->misceffect(&sd->bl,6);
 				break;
 			case GN_MIX_COOKING: {
-					struct item tmp_item;
+					struct item tmp_item = { 0 };
 					const int compensation[5] = {
 						ITEMID_BLACK_LUMP,
 						ITEMID_BLACK_HARD_LUMP,
@@ -18002,7 +17997,6 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 						ITEMID_MYSTERIOUS_POWDER,
 					};
 					int rate = rnd()%500;
-					memset(&tmp_item,0,sizeof(tmp_item));
 					if( rate < 50) i = 4;
 					else if( rate < 100) i = 2+rnd()%1;
 					else if( rate < 250 ) i = 1;
@@ -18037,7 +18031,6 @@ int skill_produce_mix(struct map_session_data *sd, uint16 skill_id, int nameid, 
 int skill_arrow_create (struct map_session_data *sd, int nameid)
 {
 	int i,j,flag,index=-1;
-	struct item tmp_item;
 
 	nullpo_ret(sd);
 
@@ -18055,7 +18048,7 @@ int skill_arrow_create (struct map_session_data *sd, int nameid)
 
 	pc->delitem(sd, j, 1, 0, DELITEM_NORMAL, LOG_TYPE_PRODUCE); // FIXME: is this the correct reason flag?
 	for(i=0;i<MAX_ARROW_RESOURCE;i++) {
-		memset(&tmp_item,0,sizeof(tmp_item));
+		struct item tmp_item = { 0 };
 		tmp_item.identify = 1;
 		tmp_item.nameid = skill->dbs->arrow_db[index].cre_id[i];
 		tmp_item.amount = skill->dbs->arrow_db[index].cre_amount[i];
@@ -18268,7 +18261,6 @@ int skill_elementalanalysis(struct map_session_data *sd, uint16 skill_lv, const 
 		return 1;
 
 	for (i = 0; i < VECTOR_LENGTH(*item_list); i++) {
-		struct item tmp_item;
 		const struct itemlist_entry *entry = &VECTOR_INDEX(*item_list, i);
 		int nameid, add_amount, product;
 		int del_amount = entry->amount;
@@ -18312,13 +18304,14 @@ int skill_elementalanalysis(struct map_session_data *sd, uint16 skill_lv, const 
 			return 1;
 		}
 
-		memset(&tmp_item,0,sizeof(tmp_item));
-		tmp_item.nameid = product;
-		tmp_item.amount = add_amount;
-		tmp_item.identify = 1;
+		if (add_amount != 0) {
+			int flag;
+			struct item tmp_item = { 0 };
+			tmp_item.nameid = product;
+			tmp_item.amount = add_amount;
+			tmp_item.identify = 1;
 
-		if (tmp_item.amount) {
-			int flag = pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
+			flag = pc->additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_CONSUME);
 			if (flag) {
 				clif->additem(sd,0,0,flag);
 				map->addflooritem(&sd->bl, &tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0);
